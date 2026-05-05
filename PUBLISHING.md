@@ -40,6 +40,6 @@ git push --follow-tags
 ## Before publishing
 
 - Decide whether MIT is the intended license.
-- Optionally add `pi.image` or `pi.video` gallery metadata to `package.json`.
+- Confirm `pi.image` points to the intended GitHub raw hero image, or replace it with `pi.video` if you create an MP4 preview.
 - Run a local install smoke test.
 - Inspect `npm pack --dry-run` output for private files.

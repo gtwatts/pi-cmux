@@ -1,0 +1,62 @@
+{
+  "createdAtUtc": "2026-05-04T21:04:59Z",
+  "setTitle": "CMUX Extension Blueprint Diagram Set",
+  "style": "Deep navy high-end technical blueprint; sparse drafting lines; restrained typography; minimal geometric flow diagrams.",
+  "piLogoSource": "/Users/gordonwatts/Downloads/Pi Logo.png",
+  "imageModel": "gpt-image-2.0 alias resolved by extension to gpt-image-2-2026-04-21",
+  "files": [
+    {
+      "file": "/Users/gordonwatts/Desktop/pi-development/diagrams/cmux-orchestration-extension-blueprint-diagram.png",
+      "title": "CMUX Orchestration Extension \u2014 Blueprint Diagram",
+      "description": "High-end technical blueprint diagram explaining CMUX as the control plane that plans, routes, launches, observes, coordinates, and delivers multi-agent work.",
+      "keywords": "CMUX, orchestration, Pi, multi-agent, control plane, blueprint, technical diagram",
+      "dimensions": "1536x1024",
+      "piLogoPlacement": "bottom-right corner, exact source logo overlaid after generation"
+    },
+    {
+      "file": "/Users/gordonwatts/Desktop/pi-development/diagrams/cmux-browser-blueprint-diagram.png",
+      "title": "CMUX Browser \u2014 Blueprint Diagram",
+      "description": "High-end technical blueprint diagram explaining CMUX Browser as a shared browser-control surface for Pi agents with observe/act workflows, locks, checkpoints, and state memory.",
+      "keywords": "CMUX Browser, Pi, browser automation, shared surface, locks, checkpoints, state memory, blueprint",
+      "dimensions": "1536x1024",
+      "piLogoPlacement": "bottom-right corner, exact source logo overlaid after generation"
+    },
+    {
+      "file": "/Users/gordonwatts/Desktop/pi-development/diagrams/cmux-intelligence-blueprint-diagram.png",
+      "title": "CMUX Intelligence \u2014 Blueprint Diagram",
+      "description": "High-end technical blueprint diagram explaining CMUX Intelligence as the context layer that converts signals, memory, recovery, and guidance into better agent decisions.",
+      "keywords": "CMUX Intelligence, Pi, agent context, memory, recovery, guidance, signals, blueprint",
+      "dimensions": "1536x1024",
+      "piLogoPlacement": "bottom-right corner, exact source logo overlaid after generation"
+    },
+    {
+      "file": "/Users/gordonwatts/Desktop/pi-development/diagrams/cmux-design-blueprint-diagram.png",
+      "title": "CMUX Design \u2014 Blueprint Diagram",
+      "description": "High-end technical blueprint diagram explaining CMUX Design as a structured design-production workflow from brief to direction, prototype, verification, and export.",
+      "keywords": "CMUX Design, Pi, design workflow, prototype, verify, export, blueprint, technical diagram",
+      "dimensions": "1536x1024",
+      "piLogoPlacement": "bottom-right corner, exact source logo overlaid after generation"
+    },
+    {
+      "file": "/Users/gordonwatts/Desktop/pi-development/diagrams/cmux-bridge-blueprint-diagram.png",
+      "title": "CMUX Bridge \u2014 Blueprint Diagram",
+      "description": "High-end technical blueprint diagram explaining CMUX Bridge as the connection layer between Pi sessions and CMUX workspaces, events, status, routing, and continuity.",
+      "keywords": "CMUX Bridge, Pi, session bridge, workspace linkage, events, status, routing, continuity, blueprint",
+      "dimensions": "1536x1024",
+      "piLogoPlacement": "bottom-right corner, exact source logo overlaid after generation"
+    },
+    {
+      "file": "/Users/gordonwatts/Desktop/pi-development/diagrams/cmux-pi-extension-cover-photo.png",
+      "title": "CMUX Pi Extension \u2014 Cover Photo",
+      "description": "Premium blueprint-style cover image for the CMUX Pi Extension diagram set.",
+      "keywords": "CMUX, Pi, extension, cover photo, blueprint, technical diagram, system set",
+      "dimensions": "1536x1024",
+      "piLogoPlacement": "embedded by OpenAI image edit using source logo reference"
+    }
+  ],
+  "lastEditedAtUtc": "2026-05-04T23:35:07Z",
+  "editNote": "Replaced manual logo patch versions with OpenAI GPT Image 2.0 edits using the Pi logo as an input reference; no manual blue corner block or grid added.",
+  "backupDirectory": "/Users/gordonwatts/Desktop/pi-development/diagrams/backup-with-duplicate-logos",
+  "backupWithGridDirectory": "/Users/gordonwatts/Desktop/pi-development/diagrams/backup-with-grid-behind-logos",
+  "backupManualPatchDirectory": "/Users/gordonwatts/Desktop/pi-development/diagrams/backup-manual-logo-patch-versions"
+}

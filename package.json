@@ -1,7 +1,7 @@
 {
   "name": "@gtwatts/pi-cmux",
   "version": "0.1.0",
-  "description": "CMUX extension family for Pi: local cmux orchestration, browser intelligence, design workflows, and Pi session bridge tooling.",
+  "description": "A coordinated Pi extension family for local CMUX multi-agent orchestration, Pi session bridging, browser intelligence, and design execution workflows.",
   "type": "module",
   "license": "MIT",
   "author": "Todd Watts",
@@ -20,13 +20,23 @@
     "pi",
     "coding-agent",
     "multi-agent",
+    "agent-orchestration",
     "browser-automation",
-    "design-tools"
+    "browser-intelligence",
+    "design-tools",
+    "terminal",
+    "local-first"
   ],
   "files": [
     "extensions/",
     "lib/",
+    "assets/",
+    "docs/",
     "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "PUBLISHING.md",
     "LICENSE"
   ],
   "pi": {
@@ -35,7 +45,8 @@
       "./extensions/cmux-pi-bridge.ts",
       "./extensions/cmux-browser-intelligence.ts",
       "./extensions/cmux-design.ts"
-    ]
+    ],
+    "image": "https://raw.githubusercontent.com/gtwatts/pi-cmux/main/assets/pi-cmux-hero.png"
   },
   "peerDependencies": {
     "@mariozechner/pi-ai": "*",
