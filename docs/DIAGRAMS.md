@@ -2,12 +2,28 @@
 
 This repository includes a hero image and a blueprint diagram set for explaining the CMUX Pi extension family.
 
+## Social preview image
+
+![Pi CMUX social preview](../assets/social-preview.jpg)
+
+- File: `assets/social-preview.jpg`
+- Size: 1280×640 JPEG, optimized below GitHub's social-preview upload limit.
+- Purpose: GitHub repository Social Preview / LinkedIn unfurl image / Pi package gallery preview.
+- Source: cropped and optimized from the generated hero image.
+
+To make LinkedIn use this when sharing the GitHub repo URL, upload it in GitHub repo settings:
+
+1. Open `https://github.com/gtwatts/pi-cmux/settings`.
+2. Scroll to **Social preview**.
+3. Upload `assets/social-preview.jpg`.
+4. Re-scrape the URL in LinkedIn Post Inspector if LinkedIn cached the previous card.
+
 ## Hero image
 
 ![Pi CMUX hero](../assets/pi-cmux-hero.png)
 
 - File: `assets/pi-cmux-hero.png`
-- Purpose: GitHub README hero, social sharing, and Pi package gallery preview.
+- Purpose: GitHub README hero and source artwork for the social preview.
 - Generated with OpenAI GPT Image 2.0 (`gpt-image-2-2026-04-21`).
 - Prompt theme: futuristic local command center with four coordinated extension modules around Pi CMUX.
 

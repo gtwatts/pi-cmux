@@ -40,6 +40,7 @@ git push --follow-tags
 ## Before publishing
 
 - Decide whether MIT is the intended license.
-- Confirm `pi.image` points to the intended GitHub raw hero image, or replace it with `pi.video` if you create an MP4 preview.
+- Confirm `pi.image` points to the intended GitHub raw social preview image, or replace it with `pi.video` if you create an MP4 preview.
+- In GitHub repository settings, upload `assets/social-preview.jpg` under **Social preview** so LinkedIn unfurls use the custom image.
 - Run a local install smoke test.
 - Inspect `npm pack --dry-run` output for private files.

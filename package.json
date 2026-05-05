@@ -46,7 +46,7 @@
       "./extensions/cmux-browser-intelligence.ts",
       "./extensions/cmux-design.ts"
     ],
-    "image": "https://raw.githubusercontent.com/gtwatts/pi-cmux/main/assets/pi-cmux-hero.png"
+    "image": "https://raw.githubusercontent.com/gtwatts/pi-cmux/main/assets/social-preview.jpg"
   },
   "peerDependencies": {
     "@mariozechner/pi-ai": "*",

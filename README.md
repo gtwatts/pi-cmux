@@ -179,7 +179,10 @@ If your Markdown viewer does not support Mermaid, read the diagram as:
 
 ## Diagram gallery
 
-The repository includes a generated hero image and a blueprint diagram set in [`assets/`](./assets) and [`assets/diagrams/`](./assets/diagrams).
+The repository includes a generated hero image, a LinkedIn/GitHub social preview image, and a blueprint diagram set in [`assets/`](./assets) and [`assets/diagrams/`](./assets/diagrams).
+
+- Social preview image: [`assets/social-preview.jpg`](./assets/social-preview.jpg) — 1280×640, optimized for GitHub's repository Social Preview setting.
+- Hero image: [`assets/pi-cmux-hero.png`](./assets/pi-cmux-hero.png)
 
 | Diagram | Preview |
 | --- | --- |
@@ -189,7 +192,7 @@ The repository includes a generated hero image and a blueprint diagram set in [`
 | CMUX Intelligence | <img src="assets/diagrams/cmux-intelligence-blueprint-diagram.png" alt="CMUX Intelligence blueprint" width="360"> |
 | CMUX Design | <img src="assets/diagrams/cmux-design-blueprint-diagram.png" alt="CMUX Design blueprint" width="360"> |
 
-See [`docs/DIAGRAMS.md`](./docs/DIAGRAMS.md) for image metadata and usage notes.
+See [`docs/DIAGRAMS.md`](./docs/DIAGRAMS.md) for image metadata and usage notes, including the GitHub Social Preview setup steps for LinkedIn sharing.
 
 ## Extension details
 
