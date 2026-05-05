@@ -1,0 +1,52 @@
+{
+  "name": "@gtwatts/pi-cmux",
+  "version": "0.1.0",
+  "description": "CMUX extension family for Pi: local cmux orchestration, browser intelligence, design workflows, and Pi session bridge tooling.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Todd Watts",
+  "homepage": "https://github.com/gtwatts/pi-cmux#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtwatts/pi-cmux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gtwatts/pi-cmux/issues"
+  },
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "cmux",
+    "pi",
+    "coding-agent",
+    "multi-agent",
+    "browser-automation",
+    "design-tools"
+  ],
+  "files": [
+    "extensions/",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/cmux-orchestrator.ts",
+      "./extensions/cmux-pi-bridge.ts",
+      "./extensions/cmux-browser-intelligence.ts",
+      "./extensions/cmux-design.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*",
+    "@sinclair/typebox": "*"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "pack:dry-run": "npm pack --dry-run",
+    "publish:dry-run": "npm publish --dry-run --access public"
+  }
+}
