@@ -1204,6 +1204,12 @@ function updatePrimaryActivityWidget(runId: string, teamRecords?: any[]) {
 	if (!primaryActivityCtx?.hasUI || !primaryActivityCtx?.ui?.setWidget) return null;
 	let snapshot: any = null;
 	try {
+		const run = resolveRunRecord(runId);
+		if (run?.primaryActivityClosedAt || run?.primaryFinalizationCleanupAt || run?.shutdownAt) {
+			stopPrimaryActivityForRun(runId);
+			clearPrimaryActivityWidget();
+			return null;
+		}
 		snapshot = persistMissionControlSnapshot(runId, teamRecords);
 		const lines = renderPrimaryActivityWidget(snapshot);
 		const hash = createHash("sha1").update(JSON.stringify({ runId, lines })).digest("hex");
@@ -1274,7 +1280,9 @@ function notifyPrimaryWhenMissionComplete(pi: ExtensionAPI, runId: string, snaps
 				reason: "primary_delivery",
 				timeout: 12_000,
 				notify: true,
-			}).catch(() => null);
+			}).catch(() => {
+				closePrimaryActivityForIdleCompletion(runId, snapshot, "primary-delivery-cleanup-fallback");
+			});
 		}, 250);
 		return true;
 	} catch {
@@ -1293,6 +1301,10 @@ function startPrimaryActivityMonitor(pi: ExtensionAPI, runId: string, teamRecord
 		const notified = notifyPrimaryWhenMissionComplete(pi, runId, snapshot);
 		if (notified && options.stopOnComplete !== false) {
 			stopPrimaryActivityMonitor(runId);
+			return;
+		}
+		if (options.stopOnComplete !== false) {
+			closePrimaryActivityForIdleCompletion(runId, snapshot, "monitor-all-agents-complete-idle");
 		}
 	}, options.intervalMs || 4_000);
 	primaryActivityTimers.set(runId, timer);
@@ -1363,6 +1375,32 @@ function agentEndEventReferencesRun(event: any, runId: string) {
 function stopPrimaryActivityForRun(runId: string) {
 	stopPrimaryActivityMonitor(runId);
 	primaryActivityHashes.delete(runId);
+}
+
+function closePrimaryActivityForIdleCompletion(runId: string, snapshot: any, reason = "all-agents-complete-idle") {
+	try {
+		const completion = missionActivityCompletion(snapshot);
+		if (!completion.complete) return false;
+		const run = resolveRunRecord(runId);
+		if (run?.orchestrationInProgress) return false;
+		const status = String(run?.status || snapshot?.status || "").toLowerCase();
+		if (["launching", "working"].includes(status)) return false;
+		const closedAt = run?.primaryActivityClosedAt || nowIso();
+		if (!run?.primaryActivityClosedAt) {
+			upsertRunRecord({
+				runId,
+				primaryActivityClosedAt: closedAt,
+				primaryActivityCloseReason: reason,
+				primaryActivityCompletionSummary: `Closed TEAM OPS module after ${completion.done}/${completion.total} agent(s) reported completion and orchestration was idle.`,
+			});
+			appendRunEvent(runId, { type: "primary_activity_auto_closed", status: "done", detail: reason });
+		}
+		stopPrimaryActivityForRun(runId);
+		clearPrimaryActivityWidget();
+		return true;
+	} catch {
+		return false;
+	}
 }
 
 async function cleanupRunAfterPrimaryDelivery(
@@ -8377,6 +8415,10 @@ export default function (pi: ExtensionAPI) {
 							clearPrimaryActivityWidget();
 						}
 						upsertRunRecord({ runId, orchestrationInProgress: false });
+						if (!shouldShutdown) {
+							const finalActivitySnapshot = persistMissionControlSnapshot(runId, latestTeamRecordsForLifecycle.length ? latestTeamRecordsForLifecycle : teamRecords);
+							closePrimaryActivityForIdleCompletion(runId, finalActivitySnapshot, finalResultsDelivered ? "orchestration-complete-no-shutdown" : "orchestration-idle-agents-complete");
+						}
 						runRecord = resolveRunRecord(runId);
 						if (blockedCandidates.length) {
 							await raiseSwarmBlocker(pi, ctx, {
