@@ -3623,7 +3623,7 @@ async function createPiTeams(
 	const timeout = params.timeoutMs ?? DEFAULT_TIMEOUT;
 	const runId = params.runId || generateRunId("swarm");
 	const sessionFingerprint = params.cmuxSessionFingerprint || await buildCmuxSessionFingerprint(pi, signal, timeout).catch(() => null);
-	const created = [];
+	const created: any[] = [];
 	for (const teamName of teamNames) {
 		created.push(await createPiTeam(pi, materializeTeamParams({ ...params, runId, cmuxSessionFingerprint: sessionFingerprint }, teamName, teamNames.length > 1), ctx, signal));
 	}
@@ -3852,9 +3852,9 @@ async function resolveOrCreatePiTeams(
 	const runId = params.runId || generateRunId("swarm");
 	const live = await liveSurfaceMap(pi, signal, timeout).catch(() => null);
 	const sessionFingerprint = params.cmuxSessionFingerprint || await buildCmuxSessionFingerprint(pi, signal, timeout).catch(() => null);
-	const records = [];
+	const records: any[] = [];
 	for (const teamName of teamNames) {
-		let existing = null;
+		let existing: any = null;
 		try {
 			existing = resolveTeamRecord(teamName);
 		} catch {
@@ -6516,9 +6516,9 @@ async function collectStatus(
 		timeout,
 	});
 
-	let identify = null;
-	let currentWorkspace = null;
-	let tree = null;
+	let identify: any = null;
+	let currentWorkspace: any = null;
+	let tree: any = null;
 
 	try {
 		identify = (await execCmuxRpc(pi, "system.identify", {}, { signal, timeout })).data;
