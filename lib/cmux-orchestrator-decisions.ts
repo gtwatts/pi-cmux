@@ -263,7 +263,7 @@ export function evaluateCompletionGate(
 ): CompletionGateEvaluation {
 	const gate = options.gate || options.executionContract || null;
 	const gatePresent = Boolean(gate && ((gate.acceptanceCriteria && gate.acceptanceCriteria.length) || (gate.verificationChecks && gate.verificationChecks.length)));
-	if (!gatePresent) {
+	if (!gatePresent || !gate) {
 		return {
 			gatePresent: false,
 			acceptanceSatisfied: true,

@@ -102,11 +102,11 @@ export function ingestBridgeEventsIntoOrchestrator(
 		});
 
 		// Run aggregates
-		run.browserLockCount += countType(events, "browser_lock_acquired");
-		run.browserRecoveryCount += countType(events, "browser_recovery_started");
-		run.browserCheckpointCount += countType(events, "browser_checkpoint_saved");
-		run.patternAnalysisCount += countType(events, "pattern_analysis_started");
-		run.patternCacheHitCount += countType(events, "pattern_analysis_cache_hit");
+		run.browserLockCount = (run.browserLockCount || 0) + countType(events, "browser_lock_acquired");
+		run.browserRecoveryCount = (run.browserRecoveryCount || 0) + countType(events, "browser_recovery_started");
+		run.browserCheckpointCount = (run.browserCheckpointCount || 0) + countType(events, "browser_checkpoint_saved");
+		run.patternAnalysisCount = (run.patternAnalysisCount || 0) + countType(events, "pattern_analysis_started");
+		run.patternCacheHitCount = (run.patternCacheHitCount || 0) + countType(events, "pattern_analysis_cache_hit");
 	}
 
 	const runSummary = summarizeRunBridgeState(Array.from(agents.values()));

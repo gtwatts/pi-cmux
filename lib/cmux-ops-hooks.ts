@@ -278,7 +278,7 @@ function localPolicyCheck(taskText: string, options: { targetCount?: number; req
 export function syncSwarmPresence(
 	_pi: ExtensionAPI,
 	ctx: any,
-	identity: { taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string; workspaceId?: string | null; surfaceId?: string | null },
+	identity: { cwd?: string; projectLabel?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string; workspaceId?: string | null; surfaceId?: string | null },
 	update: { status: string; note?: string },
 	_options?: { signal?: AbortSignal },
 ) {
@@ -301,7 +301,7 @@ export function syncSwarmPresence(
 export function raiseSwarmBlocker(
 	_pi: ExtensionAPI,
 	ctx: any,
-	identity: { projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string },
+	identity: { cwd?: string; projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string },
 	payload: { title: string; details: string; severity?: string; ownerAlias?: string },
 	_options?: { signal?: AbortSignal },
 ) {
@@ -371,7 +371,7 @@ export function createSwarmHandoff(
 export async function getControlRoomSnapshot(
 	_pi: ExtensionAPI,
 	ctx: any,
-	identity: { projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string; limit?: number },
+	identity: { cwd?: string; projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string; limit?: number },
 	_limit?: number,
 	_options?: { signal?: AbortSignal },
 ) {
@@ -395,7 +395,7 @@ export async function getControlRoomSnapshot(
 export async function getControlRoomNextActions(
 	pi: ExtensionAPI,
 	ctx: any,
-	identity: { projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string; limit?: number },
+	identity: { cwd?: string; projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string; limit?: number },
 	_limit?: number,
 	_options?: { signal?: AbortSignal },
 ) {
@@ -417,7 +417,7 @@ export async function getControlRoomNextActions(
 export async function checkApprovalPolicy(
 	_pi: ExtensionAPI,
 	ctx: any,
-	identity: { projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string },
+	identity: { cwd?: string; projectId?: string; taskId?: string | null; runId?: string | null; teamId?: string | null; agentAlias?: string },
 	riskSpec: { riskLevel: string; actionType: string; targetCount?: number; externalTarget?: string; destructive?: boolean; requestedBy?: string },
 	_options?: { signal?: AbortSignal },
 ) {

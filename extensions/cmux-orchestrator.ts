@@ -3,7 +3,6 @@
  */
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
-import { StringEnum } from "@mariozechner/pi-ai";
 import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync } from "node:fs";
 import { randomUUID, createHash } from "node:crypto";
 import { homedir } from "node:os";
@@ -233,6 +232,34 @@ function parseJson(text: string) {
 	}
 }
 
+function safePostFinding(_pi: ExtensionAPI, ctx: any, finding: any) {
+	try {
+		if (finding?.runId) {
+			appendRunEvent(finding.runId, {
+				type: "orchestrator_finding",
+				team: finding.teamId || null,
+				alias: finding.agentAlias || null,
+				status: finding.kind || "observation",
+				detail: summarize(`${finding.title || "Finding"}: ${finding.body || ""}`, 260),
+				source: "orchestrator",
+			});
+		}
+		return writeCmuxBridgeAuxEvent(ctx, "orchestrator_finding", {
+			kind: finding?.kind || "observation",
+			title: finding?.title || null,
+			body: finding?.body || null,
+			tags: finding?.tags || [],
+			summary: finding?.title || finding?.body || "Orchestrator finding",
+		}, undefined, {
+			runId: finding?.runId || null,
+			teamId: finding?.teamId || null,
+			agentAlias: finding?.agentAlias || null,
+		}).catch(() => null);
+	} catch {
+		return null;
+	}
+}
+
 function maybeReadSnippet(path: string, maxLines = 80) {
 	if (!existsSync(path)) return null;
 	return readFileSync(path, "utf-8").split(/\r?\n/).slice(0, maxLines).join("\n");
@@ -324,6 +351,15 @@ const CMUX_SOCKET_MUTATION_COMMANDS = new Set([
 	"move-workspace",
 ]);
 
+function StringEnum<T extends readonly string[]>(values: T, options?: { description?: string; default?: T[number] }) {
+	return Type.Unsafe<T[number]>({
+		type: "string",
+		enum: values as unknown as string[],
+		...(options?.description ? { description: options.description } : {}),
+		...(options?.default ? { default: options.default } : {}),
+	});
+}
+
 let cmuxSocketMutationQueue: Promise<unknown> = Promise.resolve();
 
 function shouldSerializeCmuxCommand(args: string[]) {
@@ -333,7 +369,7 @@ function shouldSerializeCmuxCommand(args: string[]) {
 
 async function runSerializedCmuxSocketMutation<T>(operation: () => Promise<T>): Promise<T> {
 	const previous = cmuxSocketMutationQueue.catch(() => undefined);
-	let release!: () => void;
+	let release!: (value?: unknown) => void;
 	cmuxSocketMutationQueue = new Promise((resolve) => {
 		release = resolve;
 	});
@@ -5058,7 +5094,7 @@ async function requestTeamLeadHeartbeats(
 	teamRecords: any[],
 	task: string,
 	digests: any[],
-	options: { round: number; appendEnter?: boolean; delayMs?: number; signal?: AbortSignal; timeout?: number } = {},
+	options: { round?: number; appendEnter?: boolean; delayMs?: number; signal?: AbortSignal; timeout?: number } = {},
 ) {
 	const results = [] as any[];
 	for (const teamRecord of teamRecords || []) {
@@ -5160,7 +5196,7 @@ async function requestRoundCoordinatorHeartbeat(
 	teamRecords: any[],
 	task: string,
 	digests: any[],
-	options: { round: number; leadHeartbeats?: any[]; appendEnter?: boolean; delayMs?: number; signal?: AbortSignal; timeout?: number } = {},
+	options: { round?: number; leadHeartbeats?: any[]; appendEnter?: boolean; delayMs?: number; signal?: AbortSignal; timeout?: number } = {},
 ) {
 	const target = primarySwarmLead(teamRecords);
 	if (!target) return null;
@@ -5411,7 +5447,7 @@ async function requestFinalSwarmSynthesis(
 		} catch {
 			return teamRecord.lastLeadSummary ? `[${teamRecord.team}] ${teamRecord.lastLeadSummary}` : null;
 		}
-	}).filter(Boolean);
+	}).filter((item): item is string => Boolean(item));
 	const message = [
 		"Produce the final swarm synthesis report.",
 		`Task: ${task}`,
@@ -7666,7 +7702,7 @@ export default function (pi: ExtensionAPI) {
 						await sleep(p.delayMs ?? 1500);
 						const capture = await captureAgentScreen(
 							pi,
-							{ alias: p.alias, workspace: sent.workspace, surface: sent.surface },
+							{ alias: p.alias || undefined, workspace: sent.workspace || undefined, surface: sent.surface },
 							{ lines: p.lines ?? 200, scrollback: p.scrollback !== false, signal, timeout },
 						);
 						return ok(
@@ -8998,7 +9034,7 @@ export default function (pi: ExtensionAPI) {
 				const surface = status.identify?.focused?.surface_ref || "unknown";
 				const doctor = await collectOrchestratorDoctor(pi, undefined, DEFAULT_TIMEOUT).catch(() => null);
 				const issues = doctor ? doctor.offlineTeams.length + doctor.degradedTeams.length + doctor.sessionMismatches.length + doctor.runsWithMissingTeams.length : 0;
-				ctx.ui.notify(`cmux ready: ${status.version} | workspace=${workspace} | surface=${surface}${doctor ? ` | orchestrator issues=${issues}` : ""}`, issues ? "error" : "success");
+				ctx.ui.notify(`cmux ready: ${status.version} | workspace=${workspace} | surface=${surface}${doctor ? ` | orchestrator issues=${issues}` : ""}`, issues ? "error" : "info");
 			} catch (error: any) {
 				ctx.ui.notify(`cmux doctor failed: ${error.message || String(error)}`, "error");
 			}
